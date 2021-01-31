@@ -6,19 +6,20 @@ public class CharacterMovement
 {
     CharacterController characterController;
     Transform playerTransform;
+    float playerSpeed;
+    float defaultPlayerSpeed = 4f;
 
-    public CharacterMovement(GameObject player, CharacterController characterController) {
+    public CharacterMovement(GameObject player, CharacterController characterController, float speed) {
         this.characterController = characterController;
         this.playerTransform = player.transform;
+        this.playerSpeed = speed > 0 ? speed : defaultPlayerSpeed;
     }
 
-    float speed = 1f * Time.deltaTime;
-
-    public void listenToKeyBoardInput() {
+    public void ListenToKeyBoardInput() {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         
         Vector3 move = playerTransform.right * x + playerTransform.forward * z;
-        characterController.Move(move * speed);
+        characterController.Move(move * this.playerSpeed * Time.deltaTime);
     }
 }
